@@ -31,3 +31,19 @@ print("=== Experiment 1 Results ===")
 print(f"Final SimCLR Loss: {simclr_stats['train_loss'].iloc[-1]:.4f}")
 print(f"Best kNN Accuracy: {simclr_stats['test_acc@1'].max():.2f}%")
 print(f"Best Linear Probing Accuracy: {linear_stats['test_acc@1'].max():.2f}%")
+
+
+# Plot 3: Linear Probing Accuracy Curve
+plt.figure(figsize=(10, 4))
+plt.plot(linear_stats['epoch'], linear_stats['test_acc@1'])
+plt.xlabel('Epoch')
+plt.ylabel('Accuracy (%)')
+plt.title('Linear Probing Test Accuracy')
+plt.grid(True)
+plt.savefig('results/linear_probing.png', dpi=150, bbox_inches='tight')
+plt.close()
+
+df = pd.read_csv('results/linear_statistics.csv')
+print('Best Top-1:', df['test_acc@1'].max())
+print('Best Top-5:', df['test_acc@5'].max())
+print('Best Epoch:', df['test_acc@1'].idxmax() + 1)
